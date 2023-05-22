@@ -1,0 +1,740 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Music Site API Documentation",
+        "contact": {
+            "email": "ervin.dev@yandex.ru"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licences/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:8000/api/",
+            "description": "Путь к серверу"
+        }
+    ],
+    "paths": {
+        "/albums/{column}/{sort}": {
+            "get": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Получить все альбомы",
+                "operationId": "albumsAll",
+                "parameters": [
+                    {
+                        "name": "column",
+                        "in": "path",
+                        "description": "id, created_at, updated_at, likes",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "path",
+                        "description": "asc, desc",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/albums/{albumId}": {
+            "get": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Получить информацию по альбому",
+                "operationId": "albumsOne",
+                "parameters": [
+                    {
+                        "name": "albumId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/albums/like/{albumId}": {
+            "post": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Лайк на альбом",
+                "operationId": "albumsLike",
+                "parameters": [
+                    {
+                        "name": "albumId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/albums/unlike/{albumId}": {
+            "post": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Снять лайк/дизлайк с альбома",
+                "operationId": "albumsUnlike",
+                "parameters": [
+                    {
+                        "name": "albumId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/albums/dislike/{albumId}": {
+            "post": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Дизлайк на альбом",
+                "operationId": "albumsDislike",
+                "parameters": [
+                    {
+                        "name": "albumId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/artists/{column}/{sort}": {
+            "get": {
+                "tags": [
+                    "Artists"
+                ],
+                "summary": "Получить список артистов",
+                "operationId": "artists",
+                "parameters": [
+                    {
+                        "name": "column",
+                        "in": "path",
+                        "description": "id, name, created_at, updated_at, likes",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "path",
+                        "description": "asc, desc",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Все хорошо"
+                    }
+                }
+            }
+        },
+        "/artists/top/{limit}": {
+            "get": {
+                "tags": [
+                    "Artists"
+                ],
+                "summary": "Получить лучших артистов",
+                "operationId": "artistsTop",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "path",
+                        "description": "Сколько записей вывести. По умолчанию: 3",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Все хорошо"
+                    }
+                }
+            }
+        },
+        "/artists/like/{artistId}": {
+            "post": {
+                "tags": [
+                    "Artists"
+                ],
+                "summary": "Лайк артиста",
+                "operationId": "artistsLike",
+                "parameters": [
+                    {
+                        "name": "artistId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/artists/unlike/{artistId}": {
+            "post": {
+                "tags": [
+                    "Albums"
+                ],
+                "summary": "Снять лайк с артиста",
+                "operationId": "artistsUnlike",
+                "parameters": [
+                    {
+                        "name": "artistId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/artists/dislike/{artistId}": {
+            "post": {
+                "tags": [
+                    "Artists"
+                ],
+                "summary": "Дизлайк артиста",
+                "operationId": "artistsDislike",
+                "parameters": [
+                    {
+                        "name": "artistId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/genres": {
+            "get": {
+                "tags": [
+                    "Genres"
+                ],
+                "summary": "Получить все жанры",
+                "operationId": "genresAll",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/genres/{id}": {
+            "get": {
+                "tags": [
+                    "Genres"
+                ],
+                "summary": "Получить информацию по жанру",
+                "operationId": "genresOne",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/tracks/{column}/{sort}": {
+            "get": {
+                "tags": [
+                    "Tracks"
+                ],
+                "summary": "Получить все треки",
+                "operationId": "tracksAll",
+                "parameters": [
+                    {
+                        "name": "column",
+                        "in": "path",
+                        "description": "id, duration, created_at, updated_at",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "sort",
+                        "in": "path",
+                        "description": "asc, desc",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/tracks/{trackId}": {
+            "get": {
+                "tags": [
+                    "Tracks"
+                ],
+                "summary": "Получить информацию по треку",
+                "operationId": "tracksOne",
+                "parameters": [
+                    {
+                        "name": "trackId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/tracks/related/{trackId}/{limit}": {
+            "get": {
+                "tags": [
+                    "Tracks"
+                ],
+                "summary": "Получить похожие трэки",
+                "operationId": "tracksRelated",
+                "parameters": [
+                    {
+                        "name": "trackId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "path",
+                        "description": "Сколько трэков получить",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Все хорошо. Трек найден"
+                    },
+                    "404": {
+                        "description": "Запрашиваемый трек не найден"
+                    }
+                }
+            }
+        },
+        "/tracks/chart/{limit}": {
+            "get": {
+                "tags": [
+                    "Tracks"
+                ],
+                "summary": "Чарт",
+                "operationId": "tracksChart",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "path",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Авторизация пользователя",
+                "operationId": "authLogin",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SwaggerLoginRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Регистрация пользователя",
+                "operationId": "authRegister",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SwaggerRegisterRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/auth/me": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Информация о пользователе",
+                "operationId": "authMe",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Выход",
+                "operationId": "authLogout",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/refresh": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Обновление токена",
+                "operationId": "authRefresh",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "apiAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "SwaggerLoginRequest": {
+                "title": "User Login Request",
+                "description": "User request authorization model",
+                "properties": {
+                    "email": {
+                        "title": "Email",
+                        "description": "User's account email",
+                        "type": "string",
+                        "format": "string",
+                        "example": "awesome@example.com"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Hash of password",
+                        "type": "string",
+                        "format": "string",
+                        "example": "somefunhash"
+                    }
+                },
+                "type": "object"
+            },
+            "SwaggerRegisterRequest": {
+                "title": "User Register Request",
+                "description": "User registration model",
+                "properties": {
+                    "email": {
+                        "title": "Email",
+                        "description": "User's account email",
+                        "type": "string",
+                        "format": "string",
+                        "example": "awesome@example.com"
+                    },
+                    "password": {
+                        "title": "Password",
+                        "description": "Hash of password",
+                        "type": "string",
+                        "format": "string",
+                        "example": "somefunhash"
+                    },
+                    "password_confirmation": {
+                        "title": "Password confirmation",
+                        "description": "Hash of password confirmation",
+                        "type": "string",
+                        "format": "string",
+                        "example": "somefunhash"
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "User's account name",
+                        "type": "string",
+                        "format": "string",
+                        "example": "Example"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "apiAuth": {
+                "type": "http",
+                "description": "Login with email and password to get the authentication token",
+                "name": "Token based Based",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Genres",
+            "description": "Получение информации о жанрах"
+        },
+        {
+            "name": "Tracks",
+            "description": "Получение информации о треках"
+        },
+        {
+            "name": "Artists",
+            "description": "Получение информации о артистах"
+        },
+        {
+            "name": "Albums",
+            "description": "Получение информации о альбомах"
+        },
+        {
+            "name": "Auth",
+            "description": "Авторизация"
+        }
+    ]
+}
