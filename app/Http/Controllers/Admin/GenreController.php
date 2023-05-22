@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Genre;
-use Illuminate\Http\Request;
+use App\Http\Requests\Admin\Datatables\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Genre\StoreRequest;
 use App\Http\Requests\Admin\Genre\UpdateRequest;
@@ -13,8 +13,16 @@ class GenreController extends Controller
 
     public function index(Request $request)
     {
-        $genres = Genre::get();
-        return view('admin.genre.index', compact('genres'));
+        $columns = (new Genre)->getDataTablesColumns();
+        return view('admin.genre.index', compact('columns'));
+    }
+
+    public function getAll(Request $request)
+    {
+        $filterParams = $request->validated();
+
+        $data = (new Genre())->getRowsDatatable($filterParams);
+        return $data;
     }
 
     public function create(): object

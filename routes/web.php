@@ -126,6 +126,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
             ->name('admin.genre.index')
             ->middleware('access:genres-index');
 
+        Route::get('/getAll', [GenreController::class, 'getAll'])
+            ->name('admin.genre.get_all')
+            ->middleware('access:genres-index');
+
         Route::get('/create', [GenreController::class, 'create'])
             ->name('admin.genre.create')
             ->middleware('access:genres-create');

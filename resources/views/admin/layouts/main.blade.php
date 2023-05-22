@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="{{ asset('dist/css/adminlte.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    @if(in_array(Route::current()->getName(), ['admin.album.index', 'admin.track.index']))
+    @if(in_array(Route::current()->getName(), ['admin.album.index', 'admin.track.index', 'admin.genre.index']))
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
     @endif
   <?php
@@ -74,13 +74,19 @@ $plugins = [
 @foreach ($plugins as $pluginUrl)
 <script src="{{ asset('plugins/' . $pluginUrl) }}"></script>
 @endforeach
-@if(in_array(Route::current()->getName(), ['admin.album.index', 'admin.track.index']))
+@if(in_array(Route::current()->getName(), ['admin.album.index', 'admin.track.index', 'admin.genre.index']))
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="{{ asset('admin/js/datatables/main.js') }}"></script>
     <script>
         const DATATABLE_iDisplayLength = {{ config('main.pagination') }};
     </script>
 @endif
+  @if(Route::current()->getName() === 'admin.genre.index')
+      <script>
+          const DATATABLE_FETCH_URL = '{{ route('admin.genre.get_all') }}';
+      </script>
+      <script src="{{ asset('admin/js/datatables/genres.js') }}"></script>
+  @endif
 @if(Route::current()->getName() === 'admin.album.index')
     <script>
         const DATATABLE_FETCH_URL = '{{ route('admin.album.get_all') }}';
