@@ -5,6 +5,7 @@
     @include('admin.templates.content_header', ['title' => 'Редактирование артиста'])
 
     <section class="content">
+        @include('admin.templates.alert', ['message' => ''])
         <form action="{{ route('admin.artist.update', $artist->id) }}" method="POST" class="col-4" enctype="multipart/form-data">
             @csrf
             @method('PUT')

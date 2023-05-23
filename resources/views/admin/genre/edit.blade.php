@@ -5,6 +5,7 @@
     @include('admin.templates.content_header', ['title' => 'Редактирование жанра'])
 
     <section class="content">
+        @include('admin.templates.alert', ['message' => ''])
         <form action="{{ route('admin.genre.update', $genre->id) }}" method="POST" class="col-4" enctype="multipart/form-data">
             @csrf
             @method('PUT')

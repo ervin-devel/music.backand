@@ -3,7 +3,7 @@
         <nav class="mt-4">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 @if(userCheckAccess('albums-create') || userCheckAccess('albums-index'))
-                    <li class="nav-item {{ isActiveNavLink(['admin.album.create', 'admin.album.index'], 'menu-open') }}">
+                    <li class="nav-item {{ isActiveNavLink(['admin.album.create', 'admin.album.index', 'admin.album.edit'], 'menu-open') }}">
                         <a href="#" class="nav-link">
                             <i class="fas fa-compact-disc nav-icon"></i>
                             <p>
@@ -16,7 +16,7 @@
                                 <li class="nav-item">
                                     <a href="{{ route('admin.album.create') }}" class="nav-link {{ isActiveNavLink('admin.album.create', 'active') }}">
                                         <i class="fa fa-plus nav-icon"></i>
-                                        <p>Создать</p>
+                                        <p>Добавить</p>
                                     </a>
                                 </li>
                             @endif
@@ -32,7 +32,7 @@
                     </li>
                 @endif
                 @if(userCheckAccess('tracks-create') || userCheckAccess('tracks-index'))
-                    <li class="nav-item {{ isActiveNavLink(['admin.track.create', 'admin.track.index'], 'menu-open') }}">
+                    <li class="nav-item {{ isActiveNavLink(['admin.track.create', 'admin.track.index', 'admin.track.edit'], 'menu-open') }}">
                         <a href="#" class="nav-link">
                             <i class="fa-solid fa-music nav-icon"></i>
                             <p>
@@ -61,7 +61,7 @@
                     </li>
                 @endif
                 @if(userCheckAccess('genres-create') || userCheckAccess('genres-index'))
-                    <li class="nav-item {{ isActiveNavLink(['admin.genre.create', 'admin.genre.index'], 'menu-open') }}">
+                    <li class="nav-item {{ isActiveNavLink(['admin.genre.create', 'admin.genre.index', 'admin.genre.edit'], 'menu-open') }}">
                         <a href="#" class="nav-link">
                             <i class="fa-solid fa-tags nav-icon"></i>
                             <p>
@@ -74,7 +74,7 @@
                                 <li class="nav-item">
                                     <a href="{{ route('admin.genre.create') }}" class="nav-link {{ isActiveNavLink('admin.genre.create', 'active') }}">
                                         <i class="fa fa-plus nav-icon"></i>
-                                        <p>Загрузить</p>
+                                        <p>Добавить</p>
                                     </a>
                                 </li>
                             @endif
@@ -90,7 +90,7 @@
                     </li>
                 @endif
                 @if(userCheckAccess('artists-create') || userCheckAccess('artists-index'))
-                    <li class="nav-item {{ isActiveNavLink(['admin.artist.create', 'admin.artist.index'], 'menu-open') }}">
+                    <li class="nav-item {{ isActiveNavLink(['admin.artist.create', 'admin.artist.index', 'admin.artist.edit'], 'menu-open') }}">
                         <a href="#" class="nav-link">
                             <i class="fa-solid fa-users nav-icon"></i>
                             <p>
@@ -103,7 +103,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('admin.artist.create') }}" class="nav-link {{ isActiveNavLink('admin.artist.create', 'active') }}">
                                             <i class="fa fa-plus nav-icon"></i>
-                                            <p>Загрузить</p>
+                                            <p>Добавить</p>
                                         </a>
                                     </li>
                                 @endif

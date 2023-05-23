@@ -36,13 +36,13 @@ class ArtistController extends Controller
     {
         $data = $request->validated();
         Artist::create($data);
-        return redirect()->route('admin.artist.index');
+        return redirect()
+            ->route('admin.artist.index')
+            ->withSuccess('Артист успешно добавлен');
     }
 
     public function edit(Artist $artist)
     {
-        /*dd(auth()->user()->follow($artist));
-        auth()->user()->follow($artist);*/
         return view('admin.artist.edit', compact('artist'));
     }
 
@@ -50,12 +50,16 @@ class ArtistController extends Controller
     {
         $data = $request->validated();
         $artist->update($data);
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->withSuccess('Информация об артисте успешно обновлена');
     }
 
     public function delete(Artist $artist)
     {
         $artist->delete();
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->withSuccess('Информация об артисте успешно удалена');
     }
 }

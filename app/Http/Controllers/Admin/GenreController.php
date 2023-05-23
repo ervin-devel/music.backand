@@ -34,7 +34,9 @@ class GenreController extends Controller
     {
         $data = $request->validated();
         Genre::create($data);
-        return redirect()->route('admin.genre.index');
+        return redirect()
+            ->route('admin.genre.index')
+            ->withSuccess('Жанр успешно добавлен');
     }
 
     public function edit(Genre $genre)
@@ -46,12 +48,16 @@ class GenreController extends Controller
     {
         $data = $request->validated();
         $genre->update($data);
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->withSuccess('Жанр успешно обновлен');
     }
 
     public function delete(Genre $genre)
     {
         $genre->delete();
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->withSuccess('Жанр успешно удален');
     }
 }

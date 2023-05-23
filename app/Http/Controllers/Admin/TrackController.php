@@ -33,7 +33,9 @@ class TrackController extends Controller
     {
         $data = $request->validated();
         $track = Track::create($data);
-        return redirect()->route('admin.track.edit', $track->id);
+        return redirect()
+            ->route('admin.track.edit', $track->id)
+            ->withSuccess('Трэк успешно добавлен');
     }
 
     public function edit(Track $track)
@@ -50,12 +52,16 @@ class TrackController extends Controller
 
         $track->update($data);
 
-        return redirect()->back()->withSuccess('Трэк успешно обновлен');
+        return redirect()
+            ->back()
+            ->withSuccess('Трэк успешно обновлен');
     }
 
     public function delete(Track $track)
     {
         $track->delete();
-        return redirect()->back();
+        return redirect()
+            ->back()
+            ->withSuccess('Трэк успешно удален');
     }
 }
