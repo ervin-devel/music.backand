@@ -75,6 +75,11 @@ trait DataTables
         return view('admin.templates.datatables.action', compact('actions'))->render();
     }
 
+    public function getUserActivateBtn($user)
+    {
+        return view('admin.templates.datatables.user_activate_btn', compact('user'))->render();
+    }
+
     public function getImage($img)
     {
         $img = Storage::url($img);

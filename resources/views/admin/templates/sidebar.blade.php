@@ -147,6 +147,35 @@
                             </ul>
                         </li>
                     @endif
+                    @if(userCheckAccess('users-create') || userCheckAccess('users-index'))
+                        <li class="nav-item {{ isActiveNavLink(['admin.user.create', 'admin.user.index', 'admin.user.edit'], 'menu-open') }}">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-user-tag nav-icon"></i>
+                                <p>
+                                    Пользователи
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @if(userCheckAccess('users-create'))
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.user.create') }}" class="nav-link {{ isActiveNavLink('admin.user.create', 'active') }}">
+                                            <i class="fa fa-plus nav-icon"></i>
+                                            <p>Добавить</p>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if(userCheckAccess('users-index'))
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.user.index') }}" class="nav-link {{ isActiveNavLink('admin.user.index', 'active') }}">
+                                            <i class="fa fa-list nav-icon" aria-hidden="true"></i>
+                                            <p>Перейти к списку</p>
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </div>

@@ -26,5 +26,8 @@ return [
         'overlayScrollbars/js/jquery.overlayScrollbars.min.js',
         'select2/js/select2.full.min.js'
     ],
-    'DatatablesActiveOnPages' => ['admin.album.index', 'admin.track.index', 'admin.genre.index', 'admin.artist.index', 'admin.role.index']
+    'DatatablesActiveOnPages' => [
+        'admin.album.index', 'admin.track.index', 'admin.genre.index',
+        'admin.artist.index', 'admin.role.index', 'admin.user.index'
+    ]
 ];

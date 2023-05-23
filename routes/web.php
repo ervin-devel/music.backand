@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\TrackController;
 use App\Http\Controllers\Admin\ArtistController;
 use App\Http\Controllers\Admin\SearchController;
 use App\Http\Controllers\User\CabinetController;
-use App\Http\Controllers\Admin\{MainController, AlbumController, RoleController};
+use App\Http\Controllers\Admin\{MainController, AlbumController, RoleController, UserController};
 use App\Http\Controllers\User\AuthController;
 
 /*
@@ -158,7 +158,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
 
     Route::group(['prefix' => 'roles'], function () {
         Route::get('/', [RoleController::class, 'index'])
-            ->name('admin.role.index');
+            ->name('admin.role.index')
+            ->middleware('access:roles-index');
 
         Route::get('/getAll', [RoleController::class, 'getAll'])
             ->name('admin.role.get_all')
@@ -183,6 +184,40 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
         Route::delete('/{role}', [RoleController::class, 'delete'])
             ->name('admin.role.delete')
             ->middleware('access:roles-delete');
+    });
+
+    Route::group(['prefix' => 'users'], function () {
+        Route::get('/', [UserController::class, 'index'])
+            ->name('admin.user.index')
+            ->middleware('access:users-index');
+
+        Route::get('/getAll', [UserController::class, 'getAll'])
+            ->name('admin.user.get_all')
+            ->middleware('access:users-index');
+
+        Route::get('/create', [UserController::class, 'create'])
+            ->name('admin.user.create')
+            ->middleware('access:users-create');
+
+        Route::post('/', [UserController::class, 'store'])
+            ->name('admin.user.store')
+            ->middleware('access:roles-create');
+
+        Route::get('/edit/{user}', [UserController::class, 'edit'])
+            ->name('admin.user.edit')
+            ->middleware('access:users-edit');
+
+        Route::put('/{user}', [UserController::class, 'update'])
+            ->name('admin.user.update')
+            ->middleware('access:users-edit');
+
+        Route::delete('/{user}', [UserController::class, 'delete'])
+            ->name('admin.user.delete')
+            ->middleware('access:users-delete');
+
+        Route::put('/user-activate/{user}', [UserController::class, 'userActivate'])
+            ->name('admin.user.activate')
+            ->middleware('access:users-edit');
     });
 
     Route::group(['prefix' => 'search'], function() {
