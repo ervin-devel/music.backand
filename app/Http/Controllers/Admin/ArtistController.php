@@ -4,19 +4,27 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Artist;
 use App\Traits\HasFollower;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Artist\StoreRequest;
 use App\Http\Requests\Admin\Artist\UpdateRequest;
+use App\Http\Requests\Admin\Datatables\Request;
 
 class ArtistController extends Controller
 {
     use HasFollower;
-    
+
     public function index()
     {
-        $artists = Artist::get();
-        return view('admin.artist.index', compact('artists'));
+        $columns = (new Artist())->getDataTablesColumns();
+        return view('admin.artist.index', compact('columns'));
+    }
+
+    public function getAll(Request $request)
+    {
+        $filterParams = $request->validated();
+
+        $data = (new Artist())->getRowsDatatable($filterParams);
+        return $data;
     }
 
     public function create()
@@ -48,6 +56,6 @@ class ArtistController extends Controller
     public function delete(Artist $artist)
     {
         $artist->delete();
-        return redirect()->back(); 
+        return redirect()->back();
     }
 }

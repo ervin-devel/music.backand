@@ -98,6 +98,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
             ->name('admin.artist.index')
             ->middleware('access:artists-index');
 
+        Route::get('/getAll', [ArtistController::class, 'getAll'])
+            ->name('admin.artist.get_all')
+            ->middleware('access:artists-index');
+
         Route::get('/create', [ArtistController::class, 'create'])
             ->name('admin.artist.create')
             ->middleware('access:artists-create');
