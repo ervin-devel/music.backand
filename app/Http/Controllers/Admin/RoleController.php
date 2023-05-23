@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\Admin\Datatables\Request;
 use App\Http\Requests\Admin\Role\StoreRequest;
 use App\Http\Requests\Admin\Role\UpdateRequest;
 use App\Models\Access;
@@ -12,13 +13,22 @@ class RoleController
 {
     public function index()
     {
-        $roles = Role::get();
-        return view('admin.role.index', compact('roles'));
+        $columns = (new Role())->getDataTablesColumns();
+        return view('admin.role.index', compact('columns'));
+    }
+
+    public function getAll(Request $request)
+    {
+        $filterParams = $request->validated();
+
+        $data = (new Role())->getRowsDatatable($filterParams);
+        return $data;
     }
 
     public function create()
     {
-        return view('admin.role.create');
+        $accesses = (new Access())->getAccessToString('<br/>');
+        return view('admin.role.create', compact('accesses'));
     }
 
     public function store(StoreRequest $request)
@@ -33,11 +43,15 @@ class RoleController
 
         $role->accessSync($data['access'] ?? []);
 
+        return redirect()
+            ->route('admin.role.index')
+            ->withSuccess('Роль успешно добавлена');
     }
 
     public function edit(Role $role)
     {
-        return view('admin.role.edit', compact('role'));
+        $accesses = (new Access())->getAccessToString('<br/>');
+        return view('admin.role.edit', compact('role', 'accesses'));
     }
 
     public function update(UpdateRequest $request, Role $role)
@@ -47,10 +61,17 @@ class RoleController
         $role->syncAccess($data['accesses'] ?? []);
         unset($data['accesses']);
         $role->update($data);
+
+        return redirect()
+            ->route('admin.role.edit', $role->id)
+            ->withSuccess('Роль успешно обновлена');
     }
 
     public function destroy(Role $role)
     {
         $role->delete();
+        return redirect()
+            ->route('admin.role.index')
+            ->withSuccess('Роль успешно удалена');
     }
 }

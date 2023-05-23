@@ -160,21 +160,25 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
         Route::get('/', [RoleController::class, 'index'])
             ->name('admin.role.index');
 
+        Route::get('/getAll', [RoleController::class, 'getAll'])
+            ->name('admin.role.get_all')
+            ->middleware('access:roles-index');
+
         Route::get('/create', [RoleController::class, 'create'])
             ->name('admin.role.create')
-            ->middleware('access:role-create');
+            ->middleware('access:roles-create');
 
         Route::post('/', [RoleController::class, 'store'])
             ->name('admin.role.store')
-            ->middleware('access:role-create');
+            ->middleware('access:roles-create');
 
         Route::get('/edit/{role}', [RoleController::class, 'edit'])
             ->name('admin.role.edit')
-            ->middleware('access:role-edit');
+            ->middleware('access:roles-edit');
 
         Route::put('/{role}', [RoleController::class, 'update'])
             ->name('admin.role.update')
-            ->middleware('access:role-edit');
+            ->middleware('access:roles-edit');
 
         Route::delete('/{role}', [RoleController::class, 'delete'])
             ->name('admin.role.delete')

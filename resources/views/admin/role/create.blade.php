@@ -15,6 +15,10 @@
                     <select name="access[]" class="form-control select2 select2-danger select2-role-access" multiple data-dropdown-css-class="select2-danger" style="width: 100%;">
                     </select>
                 </div>
+                <div>
+                    <b>Доступные разрешения:</b><br/>
+                    {!! $accesses !!}
+                </div>
                 <button class="btn btn-primary mt-4">Добавить</button>
             </form>
         </section>

@@ -118,6 +118,35 @@
                             </ul>
                         </li>
                     @endif
+                    @if(userCheckAccess('roles-create') || userCheckAccess('roles-index'))
+                        <li class="nav-item {{ isActiveNavLink(['admin.role.create', 'admin.role.index', 'admin.role.edit'], 'menu-open') }}">
+                            <a href="#" class="nav-link">
+                                <i class="fas fa-user-tag nav-icon"></i>
+                                <p>
+                                    Роли
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @if(userCheckAccess('artists-create'))
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.role.create') }}" class="nav-link {{ isActiveNavLink('admin.role.create', 'active') }}">
+                                            <i class="fa fa-plus nav-icon"></i>
+                                            <p>Добавить</p>
+                                        </a>
+                                    </li>
+                                @endif
+                                @if(userCheckAccess('artists-index'))
+                                    <li class="nav-item">
+                                        <a href="{{ route('admin.role.index') }}" class="nav-link {{ isActiveNavLink('admin.role.index', 'active') }}">
+                                            <i class="fa fa-list nav-icon" aria-hidden="true"></i>
+                                            <p>Перейти к списку</p>
+                                        </a>
+                                    </li>
+                                @endif
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </div>

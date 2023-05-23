@@ -13,4 +13,13 @@ class Access extends Model
     protected $table = 'accesses';
     protected $guarded = [];
 
+    public function getAccessToString(string|null $implode = ', ')
+    {
+        return $this->select('name')
+            ->orderBy('name', 'asc')
+            ->get()
+            ->pluck('name')
+            ->implode($implode);
+    }
+
 }

@@ -4,6 +4,7 @@
     <div class="content-wrapper">
         @include('admin.templates.content_header', ['title' => 'Редактирование роли'])
         <section class="content">
+            @include('admin.templates.alert', ['message' => ''])
             <form action="{{ route('admin.role.update', $role->id) }}" method="POST" class="col-4" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -18,6 +19,10 @@
                             <option value="{{ $item }}" selected>{{ $item->name }}</option>
                         @endforeach
                     </select>
+                </div>
+                <div>
+                    <b>Доступные разрешения:</b><br/>
+                    {!! $accesses !!}
                 </div>
                 <button class="btn btn-primary mt-4">Сохранить</button>
             </form>
