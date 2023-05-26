@@ -7,6 +7,7 @@ use App\Traits\DateFormat;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Track extends Model
 {
@@ -31,7 +32,7 @@ class Track extends Model
     }
 
 
-    public function getRowsDatatable(array $filterParams)
+    public function getRowsDatatable(array $filterParams): array
     {
 
         $this->setQueryBuild($filterParams, ['artist', 'name']);
@@ -72,12 +73,12 @@ class Track extends Model
         return $this->belongsToMany(Track::class, 'track_related', 'track_id', 'track_related_id');
     }
 
-    public function user()
+    public function user(): hasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function syncArtists(array $artists)
+    public function syncArtists(array $artists): void
     {
         $artistIds = [];
         foreach ($artists AS $artist) {

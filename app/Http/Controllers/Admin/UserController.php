@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Datatables\Request;
+use App\Http\Requests\Admin\User\StoreRequest;
 use App\Http\Requests\Admin\User\UpdateRequest;
 use App\Models\Role;
 use App\Models\User;
@@ -23,6 +24,21 @@ class UserController extends Controller
 
         $data = (new User())->getRowsDatatable($filterParams);
         return $data;
+    }
+
+    public function create()
+    {
+        $roles = Role::all();
+        return view('admin.user.create', compact('roles'));
+    }
+
+    public function store(StoreRequest $request)
+    {
+        $data = $request->validated();
+        User::create($data);
+        return redirect()
+            ->route('admin.user.index')
+            ->withSuccess('Пользователь добавлен');
     }
 
     public function edit(User $user)

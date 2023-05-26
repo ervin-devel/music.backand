@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\TrackController;
 use App\Http\Controllers\Admin\ArtistController;
 use App\Http\Controllers\Admin\SearchController;
 use App\Http\Controllers\User\CabinetController;
-use App\Http\Controllers\Admin\{MainController, AlbumController, RoleController, UserController};
+use App\Http\Controllers\Admin\{AccessController, MainController, AlbumController, RoleController, UserController};
 use App\Http\Controllers\User\AuthController;
 
 /*
@@ -154,6 +154,36 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
             ->name('admin.genre.delete')
             ->middleware('access:genres-delete');
 
+    });
+
+    Route::group(['prefix' => 'accesses'], function () {
+        Route::get('/', [AccessController::class, 'index'])
+            ->name('admin.access.index')
+            ->middleware('access:accesses-index');
+
+        Route::get('/getAll', [AccessController::class, 'getAll'])
+            ->name('admin.access.get_all')
+            ->middleware('access:accesses-index');
+
+        Route::get('/create', [AccessController::class, 'create'])
+            ->name('admin.access.create')
+            ->middleware('access:accesses-create');
+
+        Route::post('/', [AccessController::class, 'store'])
+            ->name('admin.access.store')
+            ->middleware('access:accesses-create');
+
+        Route::get('/edit/{access}', [AccessController::class, 'edit'])
+            ->name('admin.access.edit')
+            ->middleware('access:accesses-edit');
+
+        Route::put('/{access}', [AccessController::class, 'update'])
+            ->name('admin.access.update')
+            ->middleware('access:accesses-edit');
+
+        Route::delete('/{access}', [AccessController::class, 'delete'])
+            ->name('admin.access.delete')
+            ->middleware('access:accesses-delete');
     });
 
     Route::group(['prefix' => 'roles'], function () {

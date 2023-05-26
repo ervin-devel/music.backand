@@ -24,7 +24,7 @@ class Artist extends Model implements Likeable
         ];
     }
 
-    public function getRowsDatatable(array $filterParams)
+    public function getRowsDatatable(array $filterParams): array
     {
 
         $this->setQueryBuild($filterParams, ['name', 'slug', 'content']);

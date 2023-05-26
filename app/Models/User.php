@@ -9,6 +9,7 @@ use App\Traits\DateFormat;
 use App\Traits\HasFollowed;
 use App\Traits\HasLikeable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -27,6 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'role_id'
     ];
 
     /**
@@ -56,7 +58,7 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
-    public function getRowsDatatable(array $filterParams)
+    public function getRowsDatatable(array $filterParams): array
     {
         $this->setQueryBuild($filterParams, ['name', 'email']);
 
@@ -88,7 +90,7 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
-    public function role()
+    public function role(): hasOne
     {
         return $this->hasOne(Role::class, 'id', 'role_id');
     }

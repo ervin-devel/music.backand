@@ -28,6 +28,7 @@ return [
     ],
     'DatatablesActiveOnPages' => [
         'admin.album.index', 'admin.track.index', 'admin.genre.index',
-        'admin.artist.index', 'admin.role.index', 'admin.user.index'
+        'admin.artist.index', 'admin.role.index', 'admin.user.index',
+        'admin.access.index'
     ]
 ];

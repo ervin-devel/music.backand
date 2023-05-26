@@ -15,7 +15,7 @@ class AlbumController extends Controller
         return view('admin.album.index', compact('columns'));
     }
 
-    public function getAll(Request $request)
+    public function getAll(Request $request): array
     {
         $filterParams = $request->validated();
 
@@ -43,7 +43,7 @@ class AlbumController extends Controller
         return view('admin.album.edit', compact('album'));
     }
 
-    public function update(UpdateRequest $request, Album $album)
+    public function update(UpdateRequest $request, Album $album): object
     {
         $data = $request->validated();
 
@@ -58,7 +58,7 @@ class AlbumController extends Controller
         return back()->withSuccess('Альбом успешно обновлен');
     }
 
-    public function delete(Album $album)
+    public function delete(Album $album): object
     {
         $album->delete();
         return redirect()

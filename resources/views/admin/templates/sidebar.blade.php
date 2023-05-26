@@ -144,6 +144,14 @@
                                         </a>
                                     </li>
                                 @endif
+                                    @if(userCheckAccess('accesses-index'))
+                                        <li class="nav-item">
+                                            <a href="{{ route('admin.access.index') }}" class="nav-link {{ isActiveNavLink('admin.access.index', 'active') }}">
+                                                <i class="fa fa-list nav-icon" aria-hidden="true"></i>
+                                                <p>Управление разрешениями</p>
+                                            </a>
+                                        </li>
+                                    @endif
                             </ul>
                         </li>
                     @endif

@@ -6,6 +6,7 @@ use App\Traits\DataTables;
 use App\Traits\Helpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Role extends Model
 {
@@ -21,7 +22,7 @@ class Role extends Model
         ];
     }
 
-    public function getRowsDatatable(array $filterParams)
+    public function getRowsDatatable(array $filterParams): array
     {
 
         $this->setQueryBuild($filterParams, ['name', 'slug']);
@@ -48,11 +49,11 @@ class Role extends Model
             'aaData' => $rows
         ];
     }
-    public function accesses()
+    public function accesses(): BelongsToMany
     {
         return $this->belongsToMany(Access::class, 'access_roles', 'role_id', 'access_id');
     }
-    public function syncAccess(array $accesses)
+    public function syncAccess(array $accesses): void
     {
         $accessIds = [];
 
@@ -70,7 +71,6 @@ class Role extends Model
             }
         }
 
-        //$this->access()->delete();
         $this->accesses()->sync($accessIds);
     }
 }

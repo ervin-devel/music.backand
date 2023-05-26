@@ -21,11 +21,10 @@ class Genre extends Model
         ];
     }
 
-    public function getRowsDatatable(array $filterParams)
+    public function getRowsDatatable(array $filterParams): array
     {
 
         $this->setQueryBuild($filterParams, ['name']);
-
         $genres = $this->getQueryBuild()->get();
 
         $rows = [];
