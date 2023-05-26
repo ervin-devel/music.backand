@@ -14,8 +14,9 @@ class UserController extends Controller
 {
     public function index()
     {
+        $title = 'Пользователи';
         $columns = (new User)->getDataTablesColumns();
-        return view('admin.user.index', compact('columns'));
+        return view('admin.datatables.index', compact('title', 'columns'));
     }
 
     public function getAll(Request $request)

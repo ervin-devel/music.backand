@@ -13,8 +13,9 @@ class GenreController extends Controller
 
     public function index(Request $request)
     {
+        $title = 'Жанры';
         $columns = (new Genre)->getDataTablesColumns();
-        return view('admin.genre.index', compact('columns'));
+        return view('admin.datatables.index', compact('title', 'columns'));
     }
 
     public function getAll(Request $request)

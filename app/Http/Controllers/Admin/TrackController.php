@@ -14,8 +14,9 @@ class TrackController extends Controller
 
     public function index()
     {
+        $title = 'Трэки';
         $columns = Track::getDataTablesColumns();
-        return view('admin.track.index', compact('columns'));
+        return view('admin.datatables.index', compact('title', 'columns'));
     }
 
     public function getAll(Request $request)

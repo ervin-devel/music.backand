@@ -13,8 +13,9 @@ class RoleController
 {
     public function index()
     {
+        $title = 'Роли';
         $columns = (new Role())->getDataTablesColumns();
-        return view('admin.role.index', compact('columns'));
+        return view('admin.datatables.index', compact('title', 'columns'));
     }
 
     public function getAll(Request $request)

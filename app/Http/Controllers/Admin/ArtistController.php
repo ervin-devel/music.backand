@@ -15,8 +15,9 @@ class ArtistController extends Controller
 
     public function index()
     {
+        $title = 'Артисты';
         $columns = (new Artist())->getDataTablesColumns();
-        return view('admin.artist.index', compact('columns'));
+        return view('admin.datatables.index', compact('title', 'columns'));
     }
 
     public function getAll(Request $request)

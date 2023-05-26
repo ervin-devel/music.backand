@@ -11,8 +11,9 @@ class AlbumController extends Controller
 
     public function index(): object
     {
+        $title = 'Альбомы';
         $columns = Album::getDataTablesColumns();
-        return view('admin.album.index', compact('columns'));
+        return view('admin.datatables.index', compact('title', 'columns'));
     }
 
     public function getAll(Request $request): array

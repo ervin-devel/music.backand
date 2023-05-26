@@ -11,14 +11,14 @@ class AccessController extends Controller
 
     public function index(): object
     {
+        $title = 'Разрешения';
         $columns = (new Access())->getDataTablesColumns();
-        return view('admin.access.index', compact('columns'));
+        return view('admin.datatables.index', compact('title', 'columns'));
     }
 
     public function getAll(Request $request): array
     {
         $filterParams = $request->validated();
-
         $data = (new Access())->getRowsDatatable($filterParams);
         return $data;
     }
