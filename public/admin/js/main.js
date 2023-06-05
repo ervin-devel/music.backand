@@ -1,154 +1,81 @@
-const X_CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+const initSelect2 = (selector, placeholder, url, tags, processResults) => {
+    $(selector).select2({
+        placeholder,
+        minimumInputLength: 2,
+        tags,
+        ajax: {
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',
+            url,
+            dataType: 'json',
+            quietMillis: 100,
+            data: function (term, page) {
+                return {
+                    option: term
+                };
+            },
+            processResults
+        },
+    })
+}
 
 $(function () {
-    $('.select2-genres').select2({
-        placeholder: 'Поиск жанра',
-        minimumInputLength: 2,
-        tags: true,
-        ajax: {
-            headers: {
-                'X-CSRF-TOKEN': X_CSRF_TOKEN
-            },
-            type: 'POST',
-            url: GENRES_URL,
-            dataType: 'json',
-            quietMillis: 100,
-            data: function (term, page) {
-                return {
-                    option: term
-                };
-            },
-            processResults: function (data) {
-                return {
-                    results: $.map(data, function (item) {
-                        return {
-                            text: item.name,
-                            id: JSON.stringify(item)
-                        }
-                    })
-                };
-            }
-        },
-    })
 
-    $('.select2-artists').select2({
-        placeholder: 'Поиск',
-        minimumInputLength: 2,
-        tags: true,
-        ajax: {
-            headers: {
-                'X-CSRF-TOKEN': X_CSRF_TOKEN
-            },
-            type: 'POST',
-            url: ARTISTS_URL,
-            dataType: 'json',
-            quietMillis: 100,
-            data: function (term, page) {
+    initSelect2('.select2-genres', 'Поиск жанра', GENRES_URL, true, (data) => {
+        return {
+            results: $.map(data, function (item) {
                 return {
-                    option: term
-                };
-            },
-            processResults: function (data) {
-                return {
-                    results: $.map(data, function (item) {
-                        return {
-                            text: item.name,
-                            id: JSON.stringify(item)
-                        }
-                    })
-                };
-            }
-        },
-    })
+                    text: item.name,
+                    id: JSON.stringify(item)
+                }
+            })
+        };
+    });
 
-    $('.select2-tracks').select2({
-        placeholder: 'Поиск треков',
-        minimumInputLength: 2,
-        ajax: {
-            headers: {
-                'X-CSRF-TOKEN': X_CSRF_TOKEN
-            },
-            type: 'POST',
-            url: TRACKS_URL,
-            dataType: 'json',
-            quietMillis: 100,
-            data: function (term, page) {
+    initSelect2('.select2-artists','Поиск артистов', ARTISTS_URL, true, (data) => {
+        return {
+            results: $.map(data, function (item) {
                 return {
-                    option: term
-                };
-            },
-            processResults: function (data) {
-                return {
-                    results: $.map(data, function (item) {
-                        return {
-                            text: `${item.artist} - ${item.name}`,
-                            id: item.id
-                        }
-                    })
-                };
-            }
-        },
-    })
+                    text: item.name,
+                    id: JSON.stringify(item)
+                }
+            })
+        };
+    });
 
-    $('.select2-role-access').select2({
-        placeholder: 'Поиск разрешений',
-        minimumInputLength: 2,
-        tags: true,
-        ajax: {
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: 'POST',
-            url: ROLE_ACCESS_URL,
-            dataType: 'json',
-            quietMillis: 100,
-            data: function (term, page) {
+    initSelect2('.select2-tracks','Поиск трэков', TRACKS_URL, false, (data) => {
+        return {
+            results: $.map(data, function (item) {
                 return {
-                    option: term
-                };
-            },
-            processResults: function (data) {
-                return {
-                    results: $.map(data, function (item) {
-                        return {
-                            text: `${item.name}`,
-                            id: item.id
-                        }
-                    })
-                };
-            }
-        },
-    })
+                    text: `${item.artist} - ${item.name}`,
+                    id: item.id
+                }
+            })
+        };
+    });
 
-    $('.select2-categories').select2({
-        placeholder: 'Поиск категорий',
-        minimumInputLength: 2,
-        tags: true,
-        ajax: {
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: 'POST',
-            url: CATEGORIES_URL,
-            dataType: 'json',
-            quietMillis: 100,
-            data: function (term, page) {
+    initSelect2('.select2-role-access','Поиск разрешений', ROLE_ACCESS_URL, true, (data) => {
+        return {
+            results: $.map(data, function (item) {
                 return {
-                    option: term
-                };
-            },
-            processResults: function (data) {
+                    text: `${item.name}`,
+                    id: item.id
+                }
+            })
+        };
+    });
+
+    initSelect2('.select2-categories','Поиск категорий', CATEGORIES_URL, true, (data) => {
+        return {
+            results: $.map(data, function (item) {
                 return {
-                    results: $.map(data, function (item) {
-                        return {
-                            text: `${item.title}`,
-                            id: JSON.stringify(item)
-                        }
-                    })
-                };
-            }
-        },
-    })
+                    text: `${item.title}`,
+                    id: JSON.stringify(item)
+                }
+            })
+        };
+    });
 
 });
-
