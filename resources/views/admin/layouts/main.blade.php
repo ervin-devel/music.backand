@@ -64,6 +64,7 @@
     const GENRES_URL = '{{ route('admin.search.genre') }}';
     const ARTISTS_URL = '{{ route('admin.search.artist') }}';
     const TRACKS_URL = '{{ route('admin.search.track') }}';
+    const CATEGORIES_URL = '{{ route('admin.search.category') }}';
     const ROLE_ACCESS_URL = '{{ route('admin.search.access_role') }}';
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>

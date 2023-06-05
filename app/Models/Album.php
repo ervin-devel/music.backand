@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Album extends Model implements Likeable
 {
@@ -22,6 +23,7 @@ class Album extends Model implements Likeable
 
     final public const PUBLISHED_TEXT = 'Опубликован';
     final public const NOT_PUBLISHED_TEXT = 'Не опубликован';
+
 
     public static function getDataTablesColumns(): array
     {
@@ -35,6 +37,7 @@ class Album extends Model implements Likeable
     {
 
         $this->setQueryBuild($filterParams, ['title', 'slug', 'content']);
+
 
         $albums = $this->getQueryBuild()
             ->with('likes')

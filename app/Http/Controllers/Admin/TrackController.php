@@ -49,7 +49,8 @@ class TrackController extends Controller
         $data = $request->validated();
 
         $track->syncArtists($data['artists'] ?? []);
-        unset($data['artists']);
+        $track->syncCategories($data['categories'] ?? []);
+        unset($data['artists'], $data['categories']);
 
         $track->update($data);
 

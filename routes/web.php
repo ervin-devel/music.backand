@@ -255,6 +255,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
         Route::post('/artist', [SearchController::class, 'artist'])->name('admin.search.artist');
         Route::post('/tracks', [SearchController::class, 'track'])->name('admin.search.track');
         Route::post('/access-role', [SearchController::class, 'accessRole'])->name('admin.search.access_role');
+        Route::post('/categories', [SearchController::class, 'category'])->name('admin.search.category');
     });
 
 });

@@ -29,27 +29,24 @@ class Artist extends Model implements Likeable
 
         $this->setQueryBuild($filterParams, ['name', 'slug', 'content']);
 
-        $artists = $this->getQueryBuild()->get();
-
-        $rows = [];
-        foreach ($artists AS $artist) {
-            $rows[] = [
-                'id' => $artist->id,
-                'name' => $artist->name,
-                'slug' => $artist->slug,
-                'photo' => $artist->getImage($artist->photo),
-                'actions' => $artist->getActionButtons([
-                    'edit' => route('admin.artist.edit', $artist->id),
-                    'delete' => route('admin.artist.delete', $artist->id)
-                ])
-            ];
-        }
+        $artists = $this
+            ->getQueryBuild()
+            ->select('id', 'name', 'slug', 'photo')
+            ->get()
+            ->map(function ($item) {
+                $item['photo'] = $this->getImage($item['photo']);
+                $item['actions'] = $this->getActionButtons([
+                    'edit' => route('admin.artist.edit', $item['id']),
+                    'delete' => route('admin.artist.delete', $item['id'])
+                ]);
+                return $item;
+            });
 
         return [
             'draw' => $filterParams['draw'],
             'iTotalRecords' => $this->getTotalRows(),
             'iTotalDisplayRecords' => $this->getTotalRowsWithFilter(),
-            'aaData' => $rows
+            'aaData' => $artists
         ];
     }
 

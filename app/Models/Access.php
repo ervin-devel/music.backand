@@ -31,26 +31,23 @@ class Access extends Model
 
         $this->setQueryBuild($filterParams, ['name', 'slug']);
 
-        $accesses = $this->getQueryBuild()->get();
-
-        $rows = [];
-        foreach ($accesses AS $access) {
-            $rows[] = [
-                'id' => $access->id,
-                'name' => $access->name,
-                'slug' => $access->slug,
-                'actions' => $access->getActionButtons([
-                    'edit' => route('admin.access.edit', $access->id),
-                    'delete' => route('admin.access.delete', $access->id)
-                ])
-            ];
-        }
+        $accesses = $this
+            ->getQueryBuild()
+            ->select('id', 'name', 'slug')
+            ->get()
+            ->map(function ($item) {
+                $item['actions'] = $this->getActionButtons([
+                    'edit' => route('admin.access.edit', $item['id']),
+                    'delete' => route('admin.access.delete', $item['id'])
+                ]);
+                return $item;
+            });
 
         return [
             'draw' => $filterParams['draw'],
             'iTotalRecords' => $this->getTotalRows(),
             'iTotalDisplayRecords' => $this->getTotalRowsWithFilter(),
-            'aaData' => $rows
+            'aaData' => $accesses
         ];
     }
 

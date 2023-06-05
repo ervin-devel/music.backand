@@ -38,6 +38,14 @@
                     @endforeach
                 </select>
             </div>
+            <div class="form-group">
+                <label>Категории</label>
+                <select name="categories[]" class="form-control select2 select2-danger select2-categories" multiple data-dropdown-css-class="select2-danger" style="width: 100%;">
+                    @foreach($track->categories AS $category)
+                        <option value="{{ $category }}" selected>{{ $category->title }}</option>
+                    @endforeach
+                </select>
+            </div>
             <button class="btn btn-primary mt-4">Сохранить</button>
         </form>
     </section>

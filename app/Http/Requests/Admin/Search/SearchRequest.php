@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Admin\Track;
+namespace App\Http\Requests\Admin\Search;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class SearchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'artist' => 'required|string',
-            'name' => 'required|string',
-            'id3v1_year' => 'nullable',
-            'id3v1_album' => 'nullable',
-            'lyurics' => 'nullable',
-            'artists' => 'nullable',
-            'categories' => 'nullable'
+            'option' => 'required|array|min:2'
         ];
     }
 }

@@ -7,8 +7,6 @@ use Illuminate\Support\Str;
 
 class AlbumObserver
 {
-
-
     protected Album $album;
 
     public function creating(Album $album): void
@@ -31,8 +29,6 @@ class AlbumObserver
         $this->setPublished($album);
 
     }
-
-
 
     protected function setPublished(Album $album): void
     {

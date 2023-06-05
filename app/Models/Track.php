@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\DataTables;
 use App\Traits\DateFormat;
+use App\Traits\Helpers;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Track extends Model
 {
-    use HasFactory, DateFormat, DataTables;
+    use HasFactory, DateFormat, DataTables, Helpers;
 
     protected $table = 'tracks';
     protected $guarded = [];
@@ -63,6 +64,11 @@ class Track extends Model
         ];
     }
 
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'category_tracks', 'track_id', 'category_id');
+    }
+
     public function artists(): BelongsToMany
     {
         return $this->belongsToMany(Artist::class, 'artist_tracks', 'track_id', 'artist_id');
@@ -87,5 +93,28 @@ class Track extends Model
         }
 
         $this->artists()->sync($artistIds);
+    }
+
+    public function syncCategories(array $categories): void
+    {
+        $categoriesIds = [];
+
+        if (count($categories)) {
+            foreach ($categories AS $category) {
+
+                if ($this->isJson($category)) {
+                    $category = json_decode($category, true);
+                    $categoriesIds[] = $category['id'];
+                }
+                else {
+                    $createdCategory = Category::create([
+                        'title' => $category
+                    ]);
+                    $categoriesIds[] = $createdCategory->id;
+                }
+            }
+        }
+
+        $this->categories()->sync($categoriesIds);
     }
 }

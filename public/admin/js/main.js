@@ -120,5 +120,35 @@ $(function () {
         },
     })
 
+    $('.select2-categories').select2({
+        placeholder: 'Поиск категорий',
+        minimumInputLength: 2,
+        tags: true,
+        ajax: {
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',
+            url: CATEGORIES_URL,
+            dataType: 'json',
+            quietMillis: 100,
+            data: function (term, page) {
+                return {
+                    option: term
+                };
+            },
+            processResults: function (data) {
+                return {
+                    results: $.map(data, function (item) {
+                        return {
+                            text: `${item.title}`,
+                            id: JSON.stringify(item)
+                        }
+                    })
+                };
+            }
+        },
+    })
+
 });
 
